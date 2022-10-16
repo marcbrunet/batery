@@ -1,16 +1,17 @@
 from django.shortcuts import render
-from cells.models import series, pack
-# Create your views here.
+from cells.models import series, pack, evaluation
 from django.http import JsonResponse
+# Create your views here.
 
 
 def series_capacyti(request):
-    paralels = series.objects.all()
     data = {'series': {}}
+    paralels = series.objects.all()
     for s in paralels:
         packs = pack.objects.filter(series=s)
-        capacyti = 0
+        data['series'][s.number] = 0
         for elemnt in packs:
-            capacyti += elemnt.capacity
-        data['series'][s.number] = capacyti
+            if not elemnt.retiret:
+                capacyti = evaluation.objects.filter(pack_id=elemnt).last().capacyti
+                data['series'][s.number] += capacyti
     return JsonResponse(data)

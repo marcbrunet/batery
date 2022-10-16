@@ -16,8 +16,15 @@ class pack(models.Model):
     startDate = models.DateField(auto_now=True)
     retiret = models.BooleanField(default=False)
     series = models.ForeignKey(series, on_delete=models.CASCADE)
-    capacity = models.IntegerField()
-
 
     def __str__(self):
         return "piles: " + str(self.piles) + ' del: ' + str(self.startDate) +" en la seria: " + str(self.series)
+
+class evaluation(models.Model):
+    startDate = models.DateField(auto_now=True)
+    pack_id = models.ForeignKey(pack, on_delete=models.CASCADE)
+    capacyti = models.IntegerField()
+
+    def __str__(self):
+        return 'date: ' + str(self.startDate) + ' pak: ' + str(self.pack_id) + ' capacitat: ' + str(self.capacyti)
+
