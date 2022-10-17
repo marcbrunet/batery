@@ -14,4 +14,4 @@ def series_capacyti(request):
             if not elemnt.retiret:
                 capacyti = evaluation.objects.filter(pack_id=elemnt).last().capacyti
                 data['series'][s.number] += capacyti
-    return JsonResponse(data)
+    return render(request=request, template_name='dashboard.html', context=data)
